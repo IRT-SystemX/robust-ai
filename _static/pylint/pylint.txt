@@ -144,12 +144,12 @@ robustAI/advertrain/dependencies/cleverhans/__init__.py:1:0: R0801: Similar line
 robustAI/advertrain/dependencies/cleverhans/__init__.py:1:0: R0801: Similar lines in 2 files
 ==robustAI.advertrain.dependencies.fire:[110:116]
 ==robustAI.advertrain.dependencies.trades:[87:93]
-                    grad = torch.autograd.grad(loss_kl, [x_adv])[0]
-                    x_adv = x_adv.detach() + step_size * torch.sign(grad.detach())
-                    x_adv = torch.min(
-                        torch.max(x_adv, x_natural - epsilon), x_natural + epsilon
-                    )
-                    x_adv = torch.clamp(x_adv, 0.0, 1.0) (duplicate-code)
+            grad = torch.autograd.grad(loss_kl, [x_adv])[0]
+            x_adv = x_adv.detach() + step_size * torch.sign(grad.detach())
+            x_adv = torch.min(
+                torch.max(x_adv, x_natural - epsilon), x_natural + epsilon
+            )
+            x_adv = torch.clamp(x_adv, 0.0, 1.0) (duplicate-code)
 robustAI/advertrain/dependencies/cleverhans/__init__.py:1:0: R0801: Similar lines in 2 files
 ==robustAI.advertrain.training.fire_training:[75:95]
 ==robustAI.advertrain.training.trades_training:[73:92]
@@ -160,15 +160,14 @@ robustAI/advertrain/dependencies/cleverhans/__init__.py:1:0: R0801: Similar line
 
     def val_batch(self, x: torch.Tensor, y: torch.Tensor, epoch: int) -> tuple[float, int]:
         """
-        Validate the model for one batch of data.
+        Validate the model on a batch of data.
 
         Args:
-            x (torch.Tensor): The input data.
-            y (torch.Tensor): The labels corresponding to the input data.
-            epoch (int): The current epoch number.
+            x (torch.Tensor): Input data.
+            y (torch.Tensor): Target labels.
 
         Returns:
-            tuple[float, int]: A tuple containing the loss value and the batch size.
+            tuple[float, int]: Tuple containing the loss and the number of examples in the batch.
         """
         x, y = x.to(self.device), y.to(self.device)
 
