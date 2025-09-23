@@ -78,44 +78,35 @@
              
   <section id="Example-of-using-the-advertrain-library">
 <h1>Example of using the advertrain library<a class="headerlink" href="#Example-of-using-the-advertrain-library" title="Link to this heading"></a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import torch
 from torch import nn, optim
 from pathlib import Path
 import data_all
-from robustML.advertrain.models import ConvNet, ResNet, ConvNetDropblock, ResNetDropblock
-from robustML.advertrain.training.classical_training import ClassicalTraining
-from robustML.advertrain.training.adversarial_training import AdversarialTraining
-from robustML.advertrain.training.autoattack_training import AutoAttackTraining
-from robustML.advertrain.training.fire_training import FIRETraining
-from robustML.advertrain.training.trades_training import TRADESTraining
-from robustML.advertrain.transforms import DataTransformations
+from robustAI.advertrain.models import ConvNet, ResNet, ConvNetDropblock, ResNetDropblock
+from robustAI.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.training.adversarial_training import AdversarialTraining
+from robustAI.advertrain.training.autoattack_training import AutoAttackTraining
+from robustAI.advertrain.training.fire_training import FIRETraining
+from robustAI.advertrain.training.trades_training import TRADESTraining
+from robustAI.advertrain.transforms import DataTransformations
 import sys
 import os
 import argparse
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/jovyan/Maturation/env-robustml/lib/python3.10/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
-  from .autonotebook import tqdm as notebook_tqdm
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Set here the path to the directory containing the folder c00 of the example dataset. it can be downloaded
 # here http://minio-storage.apps.confianceai-public.irtsysx.fr/ml-models/robust-ml-dataset.zip
 
-ROOT_DIR = &quot;/home/jovyan/Maturation/as434_robustness_platform/examples/dataset/c00&quot;
+ROOT_DIR = &quot;/home/jovyan/Maturation/robust-ai/examples/dataset/c00&quot;
 
 DEVICE = &quot;cuda:1&quot;
 ARCHITECTURE = &quot;resnetdropblock&quot;
@@ -125,7 +116,7 @@ MODELS_PATH = &quot;results/&quot;
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>transformer = DataTransformations()
@@ -135,7 +126,7 @@ test_transform = transformer.get_test_transforms()
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>path_data = &quot;learning_data/&quot;
@@ -152,7 +143,7 @@ train_dataloader1, val_dataloader1 = data_all.get_train_dataloader(
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>if ARCHITECTURE == &quot;convnet&quot;:
@@ -169,7 +160,7 @@ else:
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
@@ -178,7 +169,7 @@ criterion = nn.CrossEntropyLoss(weight=torch.Tensor([1, 1]).to(DEVICE))
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>if not torch.cuda.is_available() or DEVICE ==&quot;cpu&quot;:
@@ -204,7 +195,7 @@ GPU device used  cuda:1
 <section id="ClassicalTraining">
 <h3>ClassicalTraining<a class="headerlink" href="#ClassicalTraining" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>METHODE=&quot;vanilla&quot;
@@ -212,7 +203,7 @@ GPU device used  cuda:1
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = ClassicalTraining(model, optimizer, criterion, DEVICE)
@@ -223,7 +214,7 @@ GPU device used  cuda:1
 <section id="AdversarialTraining">
 <h3>AdversarialTraining<a class="headerlink" href="#AdversarialTraining" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>METHODE = &quot;adversarial_training&quot;
@@ -232,7 +223,7 @@ EPSILON = 8 / 255
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = AdversarialTraining(model, optimizer, criterion, DEVICE, EPSILON)
@@ -243,7 +234,7 @@ EPSILON = 8 / 255
 <section id="AutoAttackTraining">
 <h3>AutoAttackTraining<a class="headerlink" href="#AutoAttackTraining" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>METHODE = &quot;autoattack_training&quot;
@@ -252,7 +243,7 @@ EPSILON = 8 / 255
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = AutoAttackTraining(model, optimizer, criterion, DEVICE, &quot;ce&quot;, EPSILON)
@@ -263,7 +254,7 @@ EPSILON = 8 / 255
 <section id="FireTraining">
 <h3>FireTraining<a class="headerlink" href="#FireTraining" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>METHODE = &quot;fire_training&quot;
@@ -273,7 +264,7 @@ BETA = 1
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = FIRETraining(model, optimizer, DEVICE, EPSILON, BETA)
@@ -284,7 +275,7 @@ BETA = 1
 <section id="TradesTraining">
 <h3>TradesTraining<a class="headerlink" href="#TradesTraining" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>METHODE = &quot;trades_training&quot;
@@ -294,7 +285,7 @@ BETA = 1
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>trainer = TRADESTraining(model, optimizer, DEVICE, EPSILON, BETA)
@@ -306,7 +297,7 @@ BETA = 1
 <section id="Fit-the-model">
 <h2>Fit the model<a class="headerlink" href="#Fit-the-model" title="Link to this heading"></a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>path = os.path.join(MODELS_PATH,
@@ -337,10 +328,10 @@ Using &#39;results/resnetdropblock_trades_training&#39; directory
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/jovyan/Maturation/env-robustml/lib/python3.10/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction=&#39;sum&#39; instead.
+Epochs 1/2 : Training:   0%|          | 0/750 [00:00&lt;?, ?it/s]/home/jovyan/Maturation/env-robustml/lib/python3.10/site-packages/torch/nn/_reduction.py:42: UserWarning: size_average and reduce args will be deprecated, please use reduction=&#39;sum&#39; instead.
   warnings.warn(warning.format(ret))
-Epochs 1/2 : Training: 100%|██████████| 750/750 [02:43&lt;00:00,  4.59it/s]
-Validation: 100%|██████████| 33/33 [00:08&lt;00:00,  3.93it/s]
+Epochs 1/2 : Training: 100%|██████████| 750/750 [02:58&lt;00:00,  4.19it/s]
+Validation: 100%|██████████| 33/33 [00:08&lt;00:00,  3.94it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -349,9 +340,9 @@ Validation: 100%|██████████| 33/33 [00:08&lt;00:00,  3.93it/
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Epoch 1/2
-Train Loss:  0.690, Acc:  0.673, Recall:  0.617, Precision:  0.685,F1 Score:  0.649
-Validation Loss:  0.566, Acc:  0.773, Recall:  0.776, Precision:  0.739,F1 Score:  0.757
-Validation loss decreased (inf --&gt; 0.566105). Saving model ...
+Train Loss:  0.702, Acc:  0.660, Recall:  0.625, Precision:  0.666,F1 Score:  0.645
+Validation Loss:  0.624, Acc:  0.752, Recall:  0.793, Precision:  0.702,F1 Score:  0.745
+Validation loss decreased (inf --&gt; 0.624444). Saving model ...
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -359,8 +350,8 @@ Validation loss decreased (inf --&gt; 0.566105). Saving model ...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Epochs 2/2 : Training: 100%|██████████| 750/750 [02:45&lt;00:00,  4.54it/s]
-Validation: 100%|██████████| 33/33 [00:08&lt;00:00,  4.12it/s]
+Epochs 2/2 : Training: 100%|██████████| 750/750 [02:41&lt;00:00,  4.63it/s]
+Validation: 100%|██████████| 33/33 [00:07&lt;00:00,  4.36it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -369,26 +360,34 @@ Validation: 100%|██████████| 33/33 [00:08&lt;00:00,  4.12it/
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Epoch 2/2
-Train Loss:  0.538, Acc:  0.797, Recall:  0.795, Precision:  0.799,F1 Score:  0.797
-Validation Loss:  0.514, Acc:  0.837, Recall:  0.867, Precision:  0.795,F1 Score:  0.829
-Validation loss decreased (0.566105 --&gt; 0.514262). Saving model ...
+Train Loss:  0.586, Acc:  0.763, Recall:  0.723, Precision:  0.784,F1 Score:  0.752
+Validation Loss:  0.524, Acc:  0.792, Recall:  0.772, Precision:  0.772,F1 Score:  0.772
+Validation loss decreased (0.624444 --&gt; 0.524454). Saving model ...
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;loss&#39;: [0.6897706389427185, 0.5378051996231079],
- &#39;acc&#39;: [0.6733333468437195, 0.79666668176651],
- &#39;val_loss&#39;: [0.5661050081253052, 0.5142622590065002],
- &#39;val_acc&#39;: [0.7727272510528564, 0.8371211886405945],
+{&#39;loss&#39;: [0.7024181485176086, 0.5862274169921875],
+ &#39;acc&#39;: [0.6597499847412109, 0.762583315372467],
+ &#39;val_loss&#39;: [0.6244438886642456, 0.5244537591934204],
+ &#39;val_acc&#39;: [0.751893937587738, 0.7916666865348816],
  &#39;optimizer&#39;: &#39;Adam (\nParameter Group 0\n    amsgrad: False\n    betas: (0.9, 0.999)\n    capturable: False\n    differentiable: False\n    eps: 1e-08\n    foreach: None\n    fused: False\n    lr: 0.0001\n    maximize: False\n    weight_decay: 0\n)&#39;,
  &#39;loss_func&#39;: &#39;None&#39;,
  &#39;epochs&#39;: 2,
  &#39;patience&#39;: 2}
 </pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 </div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:

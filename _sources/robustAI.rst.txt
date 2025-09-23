@@ -1,0 +1,18 @@
+robustAI package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   robustAI.advertrain
+
+Module contents
+---------------
+
+.. automodule:: robustAI
+   :members:
+   :undoc-members:
+   :show-inheritance:

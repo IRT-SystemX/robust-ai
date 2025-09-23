@@ -1,0 +1,54 @@
+robustAI.advertrain package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   robustAI.advertrain.dependencies
+   robustAI.advertrain.training
+
+Submodules
+----------
+
+robustAI.advertrain.constants module
+------------------------------------
+
+.. automodule:: robustAI.advertrain.constants
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+robustAI.advertrain.metrics module
+----------------------------------
+
+.. automodule:: robustAI.advertrain.metrics
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+robustAI.advertrain.models module
+---------------------------------
+
+.. automodule:: robustAI.advertrain.models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+robustAI.advertrain.transforms module
+-------------------------------------
+
+.. automodule:: robustAI.advertrain.transforms
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: robustAI.advertrain
+   :members:
+   :undoc-members:
+   :show-inheritance:
