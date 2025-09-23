@@ -1,7 +1,7 @@
 import torch
 
-from robustML.advertrain.dependencies.fire import fire_loss
-from robustML.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.dependencies.fire import fire_loss
+from robustAI.advertrain.training.classical_training import ClassicalTraining
 
 
 class FIRETraining(ClassicalTraining):

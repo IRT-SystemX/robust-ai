@@ -1,5 +1,5 @@
 <div align="center">
-    <h1 style="font-size: large; font-weight: bold;">Robust-ML</h1>
+    <h1 style="font-size: large; font-weight: bold;">Robust-AI</h1>
 </div><div align="center">
 	<a href="#">
         <img src="https://img.shields.io/badge/Python-3.9%20--%203.10-blue">
@@ -24,20 +24,20 @@
 
 <br>
 <div align="center">
-    <a href="https://github.com/IRT-SystemX/robust-ml">
+    <a href="https://github.com/IRT-SystemX/robust-ai">
         <img src="https://img.shields.io/badge/GitHub-Repository-181717?logo=github" alt="GitHub">
     </a>
-    <a href="https://irt-systemx.github.io/robust-ml/">
+    <a href="https://irt-systemx.github.io/robust-ai/">
         <img src="https://img.shields.io/badge/Online%20Documentation-available-0A66C2?logo=readthedocs&logoColor=white" alt="Docs">
     </a>
-    <a href="https://pypi.org/project/robust-ml/">
-        <img src="https://img.shields.io/pypi/v/robust-ml?color=blue&label=PyPI&logo=pypi&logoColor=white" alt="PyPI">
+    <a href="https://pypi.org/project/robust-ai/">
+        <img src="https://img.shields.io/pypi/v/robust-ai?color=blue&label=PyPI&logo=pypi&logoColor=white" alt="PyPI">
     </a>
 </div>
 
 <br>
 
-Robust-ml is a library of training methods designed to improve the robustness of computer vision models.
+Robust-ai is a library of training methods designed to improve the robustness of computer vision models.
 Warning : This library requires to have a GPU, CPU-only mode is not supported.
 ## Getting started
 
@@ -53,10 +53,10 @@ source myenv/bin/activate
 Once your virtual environment is activated, you can install the uqmodels library directly from Pypi by typing :
 
 ```bash
-pip install robust-ml
+pip install robust-ai
 ```
 
-This command will install the robust-ml package and all required dependencies.
+This command will install the robust-ai package and all required dependencies.
 
 ## Input/Output
 
@@ -82,7 +82,7 @@ For more informations, you can follow the notebook example here :
 
 ### How to run the provided example
 
-- Download the example dataset [here](http://minio-storage.apps.confianceai-public.irtsysx.fr/ml-models/robust-ml-dataset.zip)
+- Download the example dataset [here](http://minio-storage.apps.confianceai-public.irtsysx.fr/ml-models/robust-ai-dataset.zip)
 and unzip it in the ```examples/``` folder. Once done, you should have subfolder named ```/examples/dataset/c00``` 
 
 - Launch the jupyter notebook ```examples/training.ipynb```
@@ -158,7 +158,7 @@ TRADES minimizes a regularized surrogate loss L(.,.) (e.g., the cross-entropy lo
 ## Contributors and Support
 
 <p align="center">
-  Robust-ml is developed by  
+  Robust-ai is developed by  
   <a href="https://www.irt-systemx.fr/en/" title="IRT SystemX">
    <img src="https://www.irt-systemx.fr/wp-content/uploads/2013/03/system-x-logo.jpeg"  height="70">
   </a>and supported by the 

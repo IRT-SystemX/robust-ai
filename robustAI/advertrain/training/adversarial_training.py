@@ -6,9 +6,9 @@ from torch import Tensor
 from torch.nn import Module
 from torch.optim import Optimizer
 
-from robustML.advertrain.dependencies.cleverhans.projected_gradient_descent import \
+from robustAI.advertrain.dependencies.cleverhans.projected_gradient_descent import \
     projected_gradient_descent
-from robustML.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.training.classical_training import ClassicalTraining
 
 
 class AdversarialTraining(ClassicalTraining):

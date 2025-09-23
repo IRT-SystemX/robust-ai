@@ -10,7 +10,7 @@ from typing import Optional
 import numpy as np
 import torch
 
-from robustML.advertrain.dependencies.cleverhans.utils import optimize_linear
+from robustAI.advertrain.dependencies.cleverhans.utils import optimize_linear
 
 
 def fast_gradient_method(

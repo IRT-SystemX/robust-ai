@@ -8,7 +8,7 @@ from torch.optim import Optimizer
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-from robustML.advertrain.metrics import Metrics
+from robustAI.advertrain.metrics import Metrics
 
 
 class ClassicalTraining:

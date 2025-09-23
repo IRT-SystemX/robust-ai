@@ -2,7 +2,7 @@ import torch
 from torch import Tensor, nn
 from torch.nn import functional as F
 
-from robustML.advertrain.dependencies.dropblock import DropBlock2d
+from robustAI.advertrain.dependencies.dropblock import DropBlock2d
 
 
 class Normalize(nn.Module):

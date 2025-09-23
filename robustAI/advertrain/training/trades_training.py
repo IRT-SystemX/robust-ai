@@ -1,8 +1,8 @@
 import torch
 from torch.nn import Module
 
-from robustML.advertrain.dependencies.trades import trades_loss
-from robustML.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.dependencies.trades import trades_loss
+from robustAI.advertrain.training.classical_training import ClassicalTraining
 
 
 class TRADESTraining(ClassicalTraining):

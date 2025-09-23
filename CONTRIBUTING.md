@@ -1,4 +1,4 @@
-# Contributing to dqm-ml
+# Contributing to robust-ai
 
 We’re thrilled that you want to contribute to our project! Your contributions help make the project better for everyone. Please take a moment to review this document in order to make your contribution as smooth as possible.
 
@@ -26,7 +26,7 @@ When reporting bugs, please be as detailed as possible so we can help resolve th
 - **Expected behavior:** What should have happened?
 - **Screenshots or logs:** Attach any relevant screenshots or logs that can help in identifying the issue.
 
-Please use the [issue tracker](https://github.com/IRT-SystemX/robust-ml/issues) to report bugs.
+Please use the [issue tracker](https://github.com/IRT-SystemX/robust-ai/issues) to report bugs.
 
 ## Suggesting Enhancements
 
@@ -46,7 +46,7 @@ To contribute code, please follow these steps:
    
 ## Submission
 
-To submit your code, please make a pull request to our [main](https://github.com/IRT-SystemX/robust-ml/tree/main) branch. For those just getting started, Github has a [how to](https://help.github.com/articles/using-pull-requests/) about pull requests.
+To submit your code, please make a pull request to our [main](https://github.com/IRT-SystemX/robust-ai/tree/main) branch. For those just getting started, Github has a [how to](https://help.github.com/articles/using-pull-requests/) about pull requests.
 
 You will be asked to sign [our CLA (Contributing License Agreement)](CLA.md) before we can merge your code. Please read it before you start working on the project.
 

@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: Upload release to pypi
-      url: https://pypi.org/manage/project/robust-ml/
+      url: https://pypi.org/manage/project/robust-ai/
     permissions:
       id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
     steps:

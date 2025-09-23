@@ -1,6 +1,6 @@
 import torch
 import pytest
-from robustML.advertrain.training.fire_training import FIRETraining
+from robustAI.advertrain.training.fire_training import FIRETraining
 
 torch.manual_seed(0)
 

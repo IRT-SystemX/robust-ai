@@ -1,8 +1,8 @@
 from typing import Callable, Tuple
 
 import torch
-from robustML.advertrain.dependencies.autoattack import APGDAttack
-from robustML.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.dependencies.autoattack import APGDAttack
+from robustAI.advertrain.training.classical_training import ClassicalTraining
 
 
 class AutoAttackTraining(ClassicalTraining):

@@ -5,11 +5,11 @@ cp -R examples docs/source/
 
 # Delete old robustML modules
 
-rm -f docs/source/robustML*.rst
+rm -f docs/source/robustAI*.rst
 
 # Generate package docstring
 
-sphinx-apidoc -o docs/source robustML
+sphinx-apidoc -o docs/source robustAI
 
 # Generate HTML
 

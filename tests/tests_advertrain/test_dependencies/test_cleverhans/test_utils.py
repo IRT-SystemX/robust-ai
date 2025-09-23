@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 import torch
 
-from robustML.advertrain.dependencies.cleverhans.utils import (clip_eta,
+from robustAI.advertrain.dependencies.cleverhans.utils import (clip_eta,
                                                                optimize_linear)
 
 

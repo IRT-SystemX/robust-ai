@@ -3,7 +3,7 @@ import torch
 from torch.nn import Linear, Module
 from torch.optim import SGD
 
-from robustML.advertrain.training.adversarial_training import \
+from robustAI.advertrain.training.adversarial_training import \
     AdversarialTraining
 
 

@@ -10,8 +10,8 @@ from typing import Optional
 import numpy as np
 import torch
 
-from robustML.advertrain.dependencies.cleverhans.fast_gradient_method import fast_gradient_method
-from robustML.advertrain.dependencies.cleverhans.utils import clip_eta
+from robustAI.advertrain.dependencies.cleverhans.fast_gradient_method import fast_gradient_method
+from robustAI.advertrain.dependencies.cleverhans.utils import clip_eta
 
 
 def projected_gradient_descent(

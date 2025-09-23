@@ -1,7 +1,7 @@
 import pytest
 import torch
 
-from robustML.advertrain.dependencies.dropblock import (DropBlock2d,
+from robustAI.advertrain.dependencies.dropblock import (DropBlock2d,
                                                         drop_block_2d,
                                                         drop_block_fast_2d)
 

@@ -4,7 +4,7 @@ from torch.nn import Linear, Module
 from torch.optim import SGD
 from torch.utils.data import DataLoader, TensorDataset
 
-from robustML.advertrain.training.classical_training import ClassicalTraining
+from robustAI.advertrain.training.classical_training import ClassicalTraining
 
 torch.manual_seed(0)
 
