@@ -1,4 +1,4 @@
-🔎 Package robust-ml
+🔎 Package robust-ai
 ==========
 
 .. toctree::
