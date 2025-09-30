@@ -1,3 +1,6 @@
+"""
+This module contains the class for ClassicalTraining including aversarial training using AutoGPD attack
+"""
 from typing import Callable, Tuple
 
 import torch
@@ -55,7 +58,8 @@ class AutoAttackTraining(ClassicalTraining):
             epoch (int): The current epoch number.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the adversarial examples and their corresponding labels.
+            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the adversarial examples and their corresponding
+            labels.
         """
         adv_x = self.apgd.perturb(x, y)
         return adv_x, y

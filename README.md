@@ -1,5 +1,5 @@
 <div align="center">
-    <h1 style="font-size: large; font-weight: bold;">Robust-AI</h1>
+    <h1 style="font-size: large; font-weight: bold;">Robust-ai</h1>
 </div><div align="center">
 	<a href="#">
         <img src="https://img.shields.io/badge/Python-3.9%20--%203.10-blue">
@@ -50,7 +50,7 @@ virtualenv -p <path/to/python3.10> myenv
 source myenv/bin/activate
 ```
 ### Installation
-Once your virtual environment is activated, you can install the uqmodels library directly from Pypi by typing :
+Once your virtual environment is activated, you can install the robust-ai library directly from Pypi by typing :
 
 ```bash
 pip install robust-ai
@@ -89,7 +89,7 @@ and unzip it in the ```examples/``` folder. Once done, you should have subfolder
 
 ## Architectures
 
-The library provides six neural network architectures. More specifically, two main architectures are implemented, as well as two derived architectures for each of them :
+The library provides four neural network architectures. More specifically, two main architectures are implemented, as well as two derived architectures for each of them :
 
 - ConvNet
 - ConvNet with DropBlock regularization
@@ -104,20 +104,16 @@ A Convolutional Neural Network (ConvNet or CNN) is a type of deep learning algor
 
 ResNet, short for Residual Network, is a type of convolutional neural network (CNN) that introduces residual connections or "shortcuts" to jump over some layers, helping to solve the vanishing gradient problem and enabling the training of much deeper networks.
 
-### Dropout
-
-Dropout is a regularization technique for reducing overfitting in neural networks by preventing complex co-adaptations on training data.
-
 ### DropBlock
 
-"DropBlock is a structured form of dropout directed at regularizing convolutional networks. In DropBlock, units in a contiguous region of a feature map are dropped together. As DropBlock discards features in a correlated area, the networks must look elsewhere for evidence to fit the data."
+DropBlock is a structured form of dropout directed at regularizing convolutional networks. In DropBlock, units in a contiguous region of a feature map are dropped together. As DropBlock discards features in a correlated area, the networks must look elsewhere for evidence to fit the data.
 
-[Paper](https://arxiv.org/abs/1810.12890v1) \
+The implementation for this part is based on this [Paper](https://arxiv.org/abs/1810.12890v1) and use a copy of this 
 [Code](https://github.com/miguelvr/dropblock/blob/7fb8fbfcb197a4bb57dc9193bcd6f375ff683f85/dropblock/dropblock.py#L6)
 
 ## Training methods
 
-Acutally two training methods are available. They take the form of three classes :
+Acutally five training methods are available. They take the form of five classes :
 
 - ClassicalTraining
 - AdversarialTraining

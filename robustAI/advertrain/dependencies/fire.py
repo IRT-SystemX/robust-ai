@@ -94,7 +94,7 @@ def fire_loss(
 
     else:
         model.eval()  # moving to eval mode to freeze batchnorm stats
-        batch_size = len(x_natural)
+        # batch_size = len(x_natural)
         # generate adversarial example
         x_adv = x_natural.detach() + 0.0  # the + 0. is for copying the tensor
         s_nat = model(x_natural).softmax(1).detach()
@@ -107,7 +107,10 @@ def fire_loss(
                     with torch.enable_grad():
                         s_adv = model(x_adv).softmax(1)
                         sqroot_prod = ((s_nat * s_adv) ** 0.5).sum(1)
-                        loss_kl = (torch.acos(sqroot_prod - 1e-7) ** 2).mean(0) # Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)
+                        # In line below, Minus eps to prevent gradient
+                        # explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)
+                        loss_kl = (torch.acos(sqroot_prod - 1e-7) ** 2).mean(0)
+
                     grad = torch.autograd.grad(loss_kl, [x_adv])[0]
                     x_adv = x_adv.detach() + step_size * torch.sign(grad.detach())
                     x_adv = torch.min(
@@ -115,16 +118,12 @@ def fire_loss(
                     )
                     x_adv = torch.clamp(x_adv, 0.0, 1.0)
             else:
-                raise ValueError(
-                    "No support for distance %s in adversarial " "training" % distance
-                )
+                raise ValueError(f"No support for distance {distance} in adversarial training")
         else:
             if distance == "L2":
                 x_adv = x_adv + epsilon * torch.randn_like(x_adv)
             else:
-                raise ValueError(
-                    "No support for distance %s in stability " "training" % distance
-                )
+                raise ValueError(f"No support for distance {distance} in stability training")
 
         model.train()  # moving to train mode to update batchnorm stats
 
@@ -141,8 +140,8 @@ def fire_loss(
         loss_natural = F.cross_entropy(logits_nat, y, ignore_index=-1)
 
         sqroot_prod = ((s_nat * s_adv) ** 0.5).sum(1)
-
-        loss_robust = (torch.acos(sqroot_prod - 1e-7) ** 2).mean(0) # Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)
+        # In line below, Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)
+        loss_robust = (torch.acos(sqroot_prod - 1e-7) ** 2).mean(0)
 
         loss = loss_natural + beta * loss_robust
 
@@ -165,8 +164,7 @@ def noise_loss(
 ) -> torch.Tensor:
     """
     This function augments the input data with random noise and computes the loss
-    based on the model's predictions for the noisy data. 
-
+    based on the model's predictions for the noisy data.
     Args:
         model (torch.nn.Module): The neural network model.
         x_natural (torch.Tensor): The original (clean) input data.

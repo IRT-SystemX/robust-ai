@@ -43,13 +43,12 @@ def fast_gradient_method(
     """
     # Clipping perturbations
     if eps < 0:
-        raise ValueError(
-            "eps must be greater than or equal to 0, got {} instead".format(eps)
-        )
+        raise ValueError(f"eps must be greater than or equal to 0, got {eps} instead")
     if eps == 0:
         return x
     if clip_min is not None and clip_max is not None and clip_min > clip_max:
-        raise ValueError(f"clip_min must be less than or equal to clip_max, got clip_min={clip_min}, clip_max={clip_max}.")
+        raise ValueError(
+            f"clip_min must be less than or equal to clip_max,got clip_min={clip_min},clip_max={clip_max}.")
 
     asserts = []
 

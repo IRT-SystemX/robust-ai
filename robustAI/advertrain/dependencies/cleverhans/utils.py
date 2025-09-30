@@ -20,14 +20,18 @@ def clip_eta(eta: torch.Tensor, norm: int, eps: float) -> torch.Tensor:
         torch.Tensor: The clipped perturbation.
     """
     if norm not in [np.inf, 1, 2]:
-        raise ValueError(f"Norm must be np.inf, 1, or 2.")
+        raise ValueError("Norm must be np.inf, 1, or 2.")
 
     elif norm == np.inf:
         eta = torch.clamp(eta, -eps, eps)
     else:
         avoid_zero_div = torch.tensor(1e-12, dtype=eta.dtype, device=eta.device)
         reduc_ind = list(range(1, len(eta.size())))
-        norm_val = torch.sqrt(torch.sum(eta ** 2, dim=reduc_ind, keepdim=True)) if norm == 2 else torch.sum(torch.abs(eta), dim=reduc_ind, keepdim=True)
+        norm_val = (
+            torch.sqrt(torch.sum(eta**2, dim=reduc_ind, keepdim=True))
+            if norm == 2
+            else torch.sum(torch.abs(eta), dim=reduc_ind, keepdim=True)
+        )
         norm_val = torch.max(norm_val, avoid_zero_div)
         factor = torch.min(torch.tensor(1.0, dtype=eta.dtype, device=eta.device), eps / norm_val)
         eta *= factor
@@ -80,7 +84,7 @@ def optimize_linear(grad: torch.Tensor, eps: float, norm: int = np.inf) -> torch
         ).to(torch.float)
         assert torch.allclose(opt_pert_norm, one_mask, rtol=1e-05, atol=1e-08)
     else:
-        raise ValueError(f"Only L-inf, L1 and L2 norms are currently implemented.")
+        raise ValueError("Only L-inf, L1 and L2 norms are currently implemented.")
 
     scaled_perturbation = eps * optimal_perturbation
     return scaled_perturbation

@@ -38,7 +38,7 @@ def L1_norm(x: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     """
     z = x.abs().view(x.shape[0], -1).sum(-1)
     if keepdim:
-        z = z.view(-1, *[1]*(len(x.shape) - 1))
+        z = z.view(-1, *[1] * (len(x.shape) - 1))
     return z
 
 
@@ -55,7 +55,7 @@ def L2_norm(x: torch.Tensor, keepdim: bool = False) -> torch.Tensor:
     """
     z = (x ** 2).view(x.shape[0], -1).sum(-1).sqrt()
     if keepdim:
-        z = z.view(-1, *[1]*(len(x.shape) - 1))
+        z = z.view(-1, *[1] * (len(x.shape) - 1))
     return z
 
 
@@ -76,11 +76,11 @@ def L1_projection(x2: torch.Tensor, y2: torch.Tensor, eps1: float) -> torch.Tens
     sigma = y.clone().sign()
     u = torch.min(1 - x - y, x + y)
     u = torch.min(torch.zeros_like(y), u)
-    l = -torch.clone(y).abs()
+    lvar = -torch.clone(y).abs()
     d = u.clone()
-    bs, indbs = torch.sort(-torch.cat((u, l), 1), dim=1)
+    bs, indbs = torch.sort(-torch.cat((u, lvar), 1), dim=1)
     bs2 = torch.cat((bs[:, 1:], torch.zeros(bs.shape[0], 1).to(bs.device)), 1)
-    inu = 2*(indbs < u.shape[1]).float() - 1
+    inu = 2 * (indbs < u.shape[1]).float() - 1
     size1 = inu.cumsum(dim=1)
     s1 = -u.sum(dim=1)
     c = eps1 - y.clone().abs().sum(dim=1)
@@ -108,7 +108,7 @@ def L1_projection(x2: torch.Tensor, y2: torch.Tensor, eps1: float) -> torch.Tens
             counter += 1
         lb2 = lb.long()
         alpha = (-s[c2, lb2] - c[c2]) / size1[c2, lb2 + 1] + bs2[c2, lb2]
-        d[c2] = -torch.min(torch.max(-u[c2], alpha.unsqueeze(-1)), -l[c2])
+        d[c2] = -torch.min(torch.max(-u[c2], alpha.unsqueeze(-1)), -lvar[c2])
     return (sigma * d).view(x2.shape)
 
 
@@ -197,7 +197,6 @@ class APGDAttack:
         self.is_tf_model = is_tf_model
         self.y_target = None
 
-
     def init_hyperparam(self, x: torch.Tensor) -> None:
         """
         Initializes various hyperparameters based on the input data.
@@ -206,7 +205,7 @@ class APGDAttack:
             x (torch.Tensor): The input data.
         """
         assert self.norm in ['Linf', 'L2', 'L1']
-        assert not self.eps is None
+        assert self.eps is not None
         if self.device is None:
             self.device = x.device
         self.orig_dim = list(x.shape[1:])
@@ -269,7 +268,7 @@ class APGDAttack:
         elif self.norm == 'L1':
             try:
                 t = x.abs().view(x.shape[0], -1).sum(dim=-1)
-            except:
+            except RuntimeError:
                 t = x.abs().reshape([x.shape[0], -1]).sum(dim=-1)
             return x / (t.view(-1, *([1] * self.ndims)) + 1e-12)
 
@@ -304,7 +303,10 @@ class APGDAttack:
         return -(x[u, y] - x_sorted[:, -2] * ind - x_sorted[:, -1] * (
             1. - ind)) / (x_sorted[:, -1] - x_sorted[:, -3] + 1e-12)
 
-    def attack_single_run(self, x: torch.Tensor, y: torch.Tensor, x_init: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    def attack_single_run(self, x: torch.Tensor,
+                          y: torch.Tensor,
+                          x_init: Optional[torch.Tensor] = None
+                          ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Performs a single run of the attack.
 
@@ -330,7 +332,7 @@ class APGDAttack:
             t = torch.randn(x.shape).to(self.device).detach()
             delta = L1_projection(x, t, self.eps)
             x_adv = x + t + delta
-        if not x_init is None:
+        if x_init is not None:
             x_adv = x_init.clone()
             if self.norm == 'L1' and self.verbose:
                 print('[custom init] L1 perturbation {:.5f}'.format(
@@ -345,7 +347,8 @@ class APGDAttack:
             if self.loss == 'ce':
                 criterion_indiv = nn.CrossEntropyLoss(reduction='none')
             elif self.loss == 'ce-targeted-cfts':
-                criterion_indiv = lambda x, y: -1. * F.cross_entropy(x, y, reduction='none')
+                def criterion_indiv(x, y):
+                    return -1. * F.cross_entropy(x, y, reduction='none')
             elif self.loss == 'dlr':
                 criterion_indiv = self.dlr_loss
             elif self.loss == 'dlr-targeted':
@@ -377,8 +380,7 @@ class APGDAttack:
                 if self.y_target is None:
                     logits, loss_indiv, grad_curr = criterion_indiv(x_adv, y)
                 else:
-                    logits, loss_indiv, grad_curr = criterion_indiv(x_adv, y,
-                        self.y_target)
+                    logits, loss_indiv, grad_curr = criterion_indiv(x_adv, y, self.y_target)
                 grad += grad_curr
 
         grad /= float(self.eot_iter)
@@ -390,7 +392,6 @@ class APGDAttack:
         step_size = alpha * self.eps * torch.ones([x.shape[0], *(
             [1] * self.ndims)]).to(self.device).detach()
         x_adv_old = x_adv.clone()
-        counter = 0
         k = self.n_iter_2 + 0
         if self.norm == 'L1':
             k = max(int(.04 * self.n_iter), 1)
@@ -408,7 +409,7 @@ class APGDAttack:
         counter3 = 0
         loss_best_last_check = loss_best.clone()
         reduced_last_check = torch.ones_like(loss_best)
-        n_reduced = 0
+        # n_reduced = 0
         n_fts = x.shape[-3] * x.shape[-2] * x.shape[-1]
         u = torch.arange(x.shape[0], device=self.device)
         for i in range(self.n_iter):
@@ -426,15 +427,28 @@ class APGDAttack:
                         x - self.eps), x + self.eps), 0.0, 1.0)
                 elif self.norm == 'L2':
                     x_adv_1 = x_adv + step_size * self.normalize(grad)
-                    x_adv_1 = torch.clamp(x + self.normalize(x_adv_1 - x) * torch.min(self.eps * torch.ones_like(x).detach(), self.lp_norm(x_adv_1 - x)), 0.0, 1.0)
+                    x_adv_1 = torch.clamp(x + self.normalize(x_adv_1 - x) *
+                                          torch.min(self.eps * torch.ones_like(x).detach(), self.lp_norm(x_adv_1 - x)),
+                                          0.0, 1.0)
                     x_adv_1 = x_adv + (x_adv_1 - x_adv) * a + grad2 * (1 - a)
-                    x_adv_1 = torch.clamp(x + self.normalize(x_adv_1 - x) * torch.min(self.eps * torch.ones_like(x).detach(), self.lp_norm(x_adv_1 - x)), 0.0, 1.0)
+                    x_adv_1 = torch.clamp(
+                        x + self.normalize(x_adv_1 - x)
+                        * torch.min(
+                            self.eps * torch.ones_like(x).detach(),
+                            self.lp_norm(x_adv_1 - x)
+                        ),
+                        0.0,
+                        1.0
+                    )
+
                 elif self.norm == 'L1':
                     grad_topk = grad.abs().view(x.shape[0], -1).sort(-1)[0]
                     topk_curr = torch.clamp((1. - topk) * n_fts, min=0, max=n_fts - 1).long()
-                    grad_topk = grad_topk[u, topk_curr].view(-1, *[1]*(len(x.shape) - 1))
+                    grad_topk = grad_topk[u, topk_curr].view(-1, *[1] * (len(x.shape) - 1))
                     sparsegrad = grad * (grad.abs() >= grad_topk).float()
-                    x_adv_1 = x_adv + step_size * sparsegrad.sign() / (sparsegrad.sign().abs().view(x.shape[0], -1).sum(dim=-1).view(-1, *[1]*(len(x.shape) - 1)) + 1e-10)
+                    x_adv_1 = x_adv + step_size * sparsegrad.sign() / (sparsegrad.sign().abs().view(x.shape[0], -1)
+                                                                       .sum(dim=-1).view(-1, *[1] * (len(x.shape) - 1))
+                                                                       + 1e-10)
                     delta_u = x_adv_1 - x
                     delta_p = L1_projection(x, delta_u, self.eps)
                     x_adv_1 = x + delta_u + delta_p
@@ -491,7 +505,7 @@ class APGDAttack:
                         if fl_oscillation.sum() > 0:
                             ind_fl_osc = (fl_oscillation > 0).nonzero().squeeze()
                             step_size[ind_fl_osc] /= 2.0
-                            n_reduced = fl_oscillation.sum()
+                            # n_reduced = fl_oscillation.sum()
 
                             x_adv[ind_fl_osc] = x_best[ind_fl_osc].clone()
                             grad[ind_fl_osc] = grad_best[ind_fl_osc].clone()
@@ -513,8 +527,8 @@ class APGDAttack:
 
         return (x_best, acc, loss_best, x_best_adv)
 
-
-    def perturb(self, x: torch.Tensor, y: Optional[torch.Tensor] = None, best_loss: bool = False, x_init: Optional[torch.Tensor] = None) -> torch.Tensor:
+    def perturb(self, x: torch.Tensor, y: Optional[torch.Tensor] = None,
+                best_loss: bool = False, x_init: Optional[torch.Tensor] = None) -> torch.Tensor:
         """
         Generates adversarial examples for the given inputs.
 
@@ -528,7 +542,7 @@ class APGDAttack:
             torch.Tensor: Adversarial examples.
         """
         assert self.loss in ['ce', 'dlr']
-        if not y is None and len(y.shape) == 0:
+        if y is not None and len(y.shape) == 0:
             x.unsqueeze_(0)
             y.unsqueeze_(0)
         self.init_hyperparam(x)
@@ -546,19 +560,20 @@ class APGDAttack:
             acc = y_pred == y
         else:
             acc = y_pred != y
-        loss = -1e10 * torch.ones_like(acc).float()
+        # loss = -1e10 * torch.ones_like(acc).float()
         if self.verbose:
-            print('-------------------------- ', 'running {}-attack with epsilon {:.5f}'.format(self.norm, self.eps), '--------------------------')
+            print('-------------------------- ', 'running {}-attack with epsilon {:.5f}'.format(self.norm, self.eps),
+                  '--------------------------')
             print('initial accuracy: {:.2%}'.format(acc.float().mean()))
 
         if self.use_largereps:
             epss = [3. * self.eps_orig, 2. * self.eps_orig, 1. * self.eps_orig]
-            iters = [.3 * self.n_iter_orig, .3 * self.n_iter_orig,
-                .4 * self.n_iter_orig]
+            iters = [.3 * self.n_iter_orig, .3 * self.n_iter_orig, .4 * self.n_iter_orig]
             iters = [math.ceil(c) for c in iters]
             iters[-1] = self.n_iter_orig - sum(iters[:-1])  # make sure to use the given iterations
             if self.verbose:
-                print('using schedule [{}x{}]'.format('+'.join([str(c) for c in epss]), '+'.join([str(c) for c in iters])))
+                print('using schedule [{}x{}]'.format('+'.join([str(c) for c in epss]),
+                                                      '+'.join([str(c) for c in iters])))
 
         startt = time.time()
         if not best_loss:
@@ -599,7 +614,8 @@ class APGDAttack:
                     print('restart {} - loss: {:.5f}'.format(counter, loss_best.sum()))
             return adv_best
 
-    def decr_eps_pgd(self, x: torch.Tensor, y: torch.Tensor, epss: list, iters: list, use_rs: bool = True) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
+    def decr_eps_pgd(self, x: torch.Tensor, y: torch.Tensor, epss: list, iters: list, use_rs: bool = True
+                     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         """
         Performs PGD with decreasing epsilon values.
 
@@ -611,8 +627,8 @@ class APGDAttack:
             use_rs (bool, optional): If True, uses random start. Defaults to True.
 
         Returns:
-            Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]: A tuple containing the final perturbed inputs,
-            the accuracy tensor, the loss tensor, and the best adversarial examples found.
+            Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]: A tuple containing the final perturbed
+            inputs, the accuracy tensor, the loss tensor, and the best adversarial examples found.
         """
         assert len(epss) == len(iters)
         assert self.norm in ['L1']
@@ -622,7 +638,7 @@ class APGDAttack:
         else:
             x_init = x + torch.randn_like(x)
             x_init += L1_projection(x, x_init - x, 1. * float(epss[0]))
-        eps_target = float(epss[-1])
+        # eps_target = float(epss[-1])
         if self.verbose:
             print('total iter: {}'.format(sum(iters)))
         for eps, niter in zip(epss, iters):
@@ -631,7 +647,7 @@ class APGDAttack:
             self.n_iter = niter + 0
             self.eps = eps + 0.
             #
-            if not x_init is None:
+            if x_init is not None:
                 x_init += L1_projection(x, x_init - x, 1. * eps)
             x_init, acc, loss, x_adv = self.attack_single_run(x, y, x_init=x_init)
         return (x_init, acc, loss, x_adv)

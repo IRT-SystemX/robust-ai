@@ -8,6 +8,7 @@ disable=
     R0913, # too-many-arguments - Too many arguments for function or method (default 5).
     R0914, # too-many-locals - Function or method has too many local variables (default 15).
     E0401, # Imports are not checked in test execution env
+    R0801, # Ignore code duplication in different file
 [FORMAT]
 max-line-length=120
 

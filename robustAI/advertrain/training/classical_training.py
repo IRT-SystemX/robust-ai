@@ -1,3 +1,7 @@
+"""
+This module contains the class for classic training process
+"""
+
 import os
 from typing import Any, Dict, Tuple
 
@@ -76,7 +80,6 @@ class ClassicalTraining:
         self.metrics.update(x, y, pred, loss)
 
         return loss.item(), len(x)
-        return loss.item(), len(x)
 
     def val_batch(
         self, x: torch.Tensor, y: torch.Tensor, epoch: int
@@ -152,11 +155,19 @@ class ClassicalTraining:
             ) = self._process_epoch(val_dataloader, epochs, epoch, train=False)
 
             # update metrics
-            metrics = self._update_metrics(metrics, train_loss.item(), train_acc.item(), val_loss.item(), val_acc.item())
+            metrics = self._update_metrics(metrics, train_loss.item(), train_acc.item(),
+                                           val_loss.item(), val_acc.item()
+                                           )
 
-            print(f"Epoch {epoch + 1}/{epochs}\n"
-                  f"Train Loss: {train_loss : .3f}, Acc: {train_acc : .3f}, Recall: {train_recall_defect : 1.3f}, Precision: {train_precision_defect : 1.3f},F1 Score: {train_f1_score_defect : .3f}\n"
-                  f"Validation Loss: {val_loss : .3f}, Acc: {val_acc : .3f}, Recall: {val_recall_defect : 1.3f}, Precision: {val_precision_defect : 1.3f},F1 Score: {val_f1_score_defect : .3f}")
+            print(
+                f"Epoch {epoch + 1}/{epochs}\n"
+                f"Train Loss: {train_loss:.3f}, Acc: {train_acc:.3f}, "
+                f"Recall: {train_recall_defect:1.3f}, Precision: {train_precision_defect:1.3f}, "
+                f"F1 Score: {train_f1_score_defect:.3f}\n"
+                f"Validation Loss: {val_loss:.3f}, Acc: {val_acc:.3f}, "
+                f"Recall: {val_recall_defect:1.3f}, Precision: {val_precision_defect:1.3f}, "
+                f"F1 Score: {val_f1_score_defect:.3f}"
+            )
 
             # Checkpoint
             self.metrics.save_metrics(metrics, checkpoint)
@@ -216,7 +227,8 @@ class ClassicalTraining:
 
         return self.metrics.get_metrics()
 
-    def _update_metrics(self, metrics: Dict[str, Any], train_loss: float, train_acc: float, val_loss: float, val_acc: float) -> None:
+    def _update_metrics(self, metrics: Dict[str, Any], train_loss: float, train_acc: float,
+                        val_loss: float, val_acc: float) -> None:
         """
         Update the overall metrics dictionary with the metrics from the current epoch.
 

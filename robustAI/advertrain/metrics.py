@@ -88,7 +88,7 @@ class Metrics:
             checkpoint (str): The directory path where the metrics.json file will be saved.
         """
         data = json.dumps(metrics)
-        with open(os.path.join(checkpoint, METRICS_FILE), "w") as f:
+        with open(os.path.join(checkpoint, METRICS_FILE), "w", encoding="utf-8") as f:
             f.write(data)
 
     def load_metrics(self, checkpoint: str) -> Dict[str, Any]:
@@ -104,7 +104,7 @@ class Metrics:
         Returns:
             Dict[str, Any]: A dictionary containing the loaded metrics.
         """
-        with open(os.path.join(checkpoint, METRICS_FILE), "r") as file:
+        with open(os.path.join(checkpoint, METRICS_FILE), "r", encoding="utf-8") as file:
             data = json.load(file)
 
         return data
@@ -132,4 +132,4 @@ class Metrics:
             title (str): The title for the table.
         """
         acc, loss, precision, recall, f1_score = self.get_metrics()
-        print(f"| {title} | {acc:.3f} | {recall:.3f} | {precision:.3f} | {f1_score:.3f} |")
+        print(f"| {title} | {acc:.3f} |{loss:.3f} | {recall:.3f} | {precision:.3f} | {f1_score:.3f} |")

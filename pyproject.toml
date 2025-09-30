@@ -3,7 +3,7 @@ name = "robust-ai"
 description="Robustness library for binary image classification tasks"
 readme = "README.md"
 dynamic = ["dependencies"]
-version= "0.1.1"
+version= "0.1.2"
 license ="Apache-2.0"
 requires-python = ">=3.9,<3.11"
 authors = [

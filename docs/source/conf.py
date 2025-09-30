@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.abspath("../../robustAI"))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Robustness Platform'
+project = 'robust-ai'
 copyright = '2025, IRT SystemX'
 author = 'IRT-SystemX'
 release = '0.1.1'
@@ -17,8 +17,8 @@ release = '0.1.1'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = [ "sphinx.ext.githubpages","sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc", "sphinx.ext.napoleon",
-              "myst_parser", "nbsphinx"]
+extensions = ["sphinx.ext.githubpages", "sphinx.ext.todo", "sphinx.ext.viewcode", "sphinx.ext.autodoc",
+              "sphinx.ext.napoleon", "myst_parser", "nbsphinx"]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']

@@ -66,13 +66,17 @@ def projected_gradient_descent(
         raise ValueError(f"eps_iter must be in the range [0, {eps}], got {eps_iter}")
 
     if clip_min is not None and clip_max is not None and clip_min > clip_max:
-        raise ValueError(f"clip_min must be less than or equal to clip_max, got clip_min={clip_min}, clip_max={clip_max}")
+        raise ValueError(f"clip_min must be less or equal to clip_max, got clip_min={clip_min}, clip_max={clip_max}")
 
     if sanity_checks:
         assert x.min() >= clip_min if clip_min is not None else True
         assert x.max() <= clip_max if clip_max is not None else True
 
-    eta = torch.zeros_like(x).uniform_(-rand_minmax if rand_minmax else eps, rand_minmax if rand_minmax else eps) if rand_init else torch.zeros_like(x)
+    eta = (
+        torch.zeros_like(x).uniform_(-rand_minmax if rand_minmax else eps, rand_minmax if rand_minmax else eps)
+        if rand_init
+        else torch.zeros_like(x)
+    )
 
     # Clip eta and prepare adv_x
     eta = clip_eta(eta, norm, eps)
