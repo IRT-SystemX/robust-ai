@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>robustAI.advertrain.training package &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>robustAI.advertrain.training package &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -31,7 +31,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,7 +55,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Robustness Platform</a>
+          <a href="index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -124,6 +124,7 @@ the generation of adversarial examples using PGD.</p>
 </section>
 <section id="module-robustAI.advertrain.training.autoattack_training">
 <span id="robustai-advertrain-training-autoattack-training-module"></span><h2>robustAI.advertrain.training.autoattack_training module<a class="headerlink" href="#module-robustAI.advertrain.training.autoattack_training" title="Link to this heading"></a></h2>
+<p>This module contains the class for ClassicalTraining including aversarial training using AutoGPD attack</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="robustAI.advertrain.training.autoattack_training.AutoAttackTraining">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robustAI.advertrain.training.autoattack_training.</span></span><span class="sig-name descname"><span class="pre">AutoAttackTraining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustAI/advertrain/training/autoattack_training.html#AutoAttackTraining"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robustAI.advertrain.training.autoattack_training.AutoAttackTraining" title="Link to this definition"></a></dt>
@@ -181,7 +182,8 @@ the generation of adversarial examples using PGD.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing the adversarial examples and their corresponding labels.</p>
+<dd class="field-even"><p>A tuple containing the adversarial examples and their corresponding
+labels.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
@@ -194,6 +196,7 @@ the generation of adversarial examples using PGD.</p>
 </section>
 <section id="module-robustAI.advertrain.training.classical_training">
 <span id="robustai-advertrain-training-classical-training-module"></span><h2>robustAI.advertrain.training.classical_training module<a class="headerlink" href="#module-robustAI.advertrain.training.classical_training" title="Link to this heading"></a></h2>
+<p>This module contains the class for classic training process</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="robustAI.advertrain.training.classical_training.ClassicalTraining">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">robustAI.advertrain.training.classical_training.</span></span><span class="sig-name descname"><span class="pre">ClassicalTraining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/robustAI/advertrain/training/classical_training.html#ClassicalTraining"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#robustAI.advertrain.training.classical_training.ClassicalTraining" title="Link to this definition"></a></dt>

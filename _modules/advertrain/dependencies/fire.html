@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>advertrain.dependencies.fire &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>advertrain.dependencies.fire &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
@@ -30,7 +30,7 @@
           
           
           <a href="../../../index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -54,7 +54,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Robustness Platform</a>
+          <a href="../../../index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -174,7 +174,7 @@
 
     <span class="k">else</span><span class="p">:</span>
         <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>  <span class="c1"># moving to eval mode to freeze batchnorm stats</span>
-        <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_natural</span><span class="p">)</span>
+        <span class="c1"># batch_size = len(x_natural)</span>
         <span class="c1"># generate adversarial example</span>
         <span class="n">x_adv</span> <span class="o">=</span> <span class="n">x_natural</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.0</span>  <span class="c1"># the + 0. is for copying the tensor</span>
         <span class="n">s_nat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_natural</span><span class="p">)</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
@@ -187,7 +187,10 @@
                     <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">enable_grad</span><span class="p">():</span>
                         <span class="n">s_adv</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x_adv</span><span class="p">)</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
                         <span class="n">sqroot_prod</span> <span class="o">=</span> <span class="p">((</span><span class="n">s_nat</span> <span class="o">*</span> <span class="n">s_adv</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-                        <span class="n">loss_kl</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">sqroot_prod</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)</span>
+                        <span class="c1"># In line below, Minus eps to prevent gradient</span>
+                        <span class="c1"># explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)</span>
+                        <span class="n">loss_kl</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">sqroot_prod</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
                     <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">loss_kl</span><span class="p">,</span> <span class="p">[</span><span class="n">x_adv</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
                     <span class="n">x_adv</span> <span class="o">=</span> <span class="n">x_adv</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
                     <span class="n">x_adv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">min</span><span class="p">(</span>
@@ -195,16 +198,12 @@
                     <span class="p">)</span>
                     <span class="n">x_adv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">x_adv</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;No support for distance </span><span class="si">%s</span><span class="s2"> in adversarial &quot;</span> <span class="s2">&quot;training&quot;</span> <span class="o">%</span> <span class="n">distance</span>
-                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No support for distance </span><span class="si">{</span><span class="n">distance</span><span class="si">}</span><span class="s2"> in adversarial training&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">distance</span> <span class="o">==</span> <span class="s2">&quot;L2&quot;</span><span class="p">:</span>
                 <span class="n">x_adv</span> <span class="o">=</span> <span class="n">x_adv</span> <span class="o">+</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x_adv</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;No support for distance </span><span class="si">%s</span><span class="s2"> in stability &quot;</span> <span class="s2">&quot;training&quot;</span> <span class="o">%</span> <span class="n">distance</span>
-                <span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No support for distance </span><span class="si">{</span><span class="n">distance</span><span class="si">}</span><span class="s2"> in stability training&quot;</span><span class="p">)</span>
 
         <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>  <span class="c1"># moving to train mode to update batchnorm stats</span>
 
@@ -221,8 +220,8 @@
         <span class="n">loss_natural</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">logits_nat</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
         <span class="n">sqroot_prod</span> <span class="o">=</span> <span class="p">((</span><span class="n">s_nat</span> <span class="o">*</span> <span class="n">s_adv</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="n">loss_robust</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">sqroot_prod</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)</span>
+        <span class="c1"># In line below, Minus eps to prevent gradient explosion near 1 (https://github.com/pytorch/pytorch/issues/8069)</span>
+        <span class="n">loss_robust</span> <span class="o">=</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">acos</span><span class="p">(</span><span class="n">sqroot_prod</span> <span class="o">-</span> <span class="mf">1e-7</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
         <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_natural</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">loss_robust</span>
 
@@ -248,8 +247,7 @@
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function augments the input data with random noise and computes the loss</span>
-<span class="sd">    based on the model&#39;s predictions for the noisy data. </span>
-
+<span class="sd">    based on the model&#39;s predictions for the noisy data.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        model (torch.nn.Module): The neural network model.</span>
 <span class="sd">        x_natural (torch.Tensor): The original (clean) input data.</span>

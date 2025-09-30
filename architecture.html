@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🎡 Architecture &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>🎡 Architecture &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -49,7 +49,6 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">🎡 Architecture</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#convnet">ConvNet</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#resnet">ResNet</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dropout">Dropout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dropblock">DropBlock</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#training-methods">Training methods</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#classicaltraining">ClassicalTraining</a></li>
@@ -71,7 +70,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Robustness Platform</a>
+          <a href="index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -91,7 +90,7 @@
              
   <section id="architecture">
 <span id="id1"></span><h1>🎡 Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h1>
-<p>The library provides six neural network architectures. More specifically, two main architectures are implemented, as well as two derived architectures for each of them :</p>
+<p>The library provides four neural network architectures. More specifically, two main architectures are implemented, as well as two derived architectures for each of them :</p>
 <ul class="simple">
 <li><p>ConvNet</p></li>
 <li><p>ConvNet with DropBlock regularization</p></li>
@@ -106,19 +105,15 @@
 <h2>ResNet<a class="headerlink" href="#resnet" title="Link to this heading"></a></h2>
 <p>ResNet, short for Residual Network, is a type of convolutional neural network (CNN) that introduces residual connections or “shortcuts” to jump over some layers, helping to solve the vanishing gradient problem and enabling the training of much deeper networks.</p>
 </section>
-<section id="dropout">
-<h2>Dropout<a class="headerlink" href="#dropout" title="Link to this heading"></a></h2>
-<p>Dropout is a regularization technique for reducing overfitting in neural networks by preventing complex co-adaptations on training data.</p>
-</section>
 <section id="dropblock">
 <h2>DropBlock<a class="headerlink" href="#dropblock" title="Link to this heading"></a></h2>
-<p>“DropBlock is a structured form of dropout directed at regularizing convolutional networks. In DropBlock, units in a contiguous region of a feature map are dropped together. As DropBlock discards features in a correlated area, the networks must look elsewhere for evidence to fit the data.”</p>
-<p><a class="reference external" href="https://arxiv.org/abs/1810.12890v1">Paper</a> <br />
+<p>DropBlock is a structured form of dropout directed at regularizing convolutional networks. In DropBlock, units in a contiguous region of a feature map are dropped together. As DropBlock discards features in a correlated area, the networks must look elsewhere for evidence to fit the data.</p>
+<p>The implementation for this part is based on this <a class="reference external" href="https://arxiv.org/abs/1810.12890v1">Paper</a> and use a copy of this
 <a class="reference external" href="https://github.com/miguelvr/dropblock/blob/7fb8fbfcb197a4bb57dc9193bcd6f375ff683f85/dropblock/dropblock.py#L6">Code</a></p>
 </section>
 <section id="training-methods">
 <h2>Training methods<a class="headerlink" href="#training-methods" title="Link to this heading"></a></h2>
-<p>Acutally two training methods are available. They take the form of three classes :</p>
+<p>Acutally five training methods are available. They take the form of five classes :</p>
 <ul class="simple">
 <li><p>ClassicalTraining</p></li>
 <li><p>AdversarialTraining</p></li>

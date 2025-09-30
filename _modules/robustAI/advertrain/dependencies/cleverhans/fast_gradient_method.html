@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>robustAI.advertrain.dependencies.cleverhans.fast_gradient_method &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>robustAI.advertrain.dependencies.cleverhans.fast_gradient_method &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
 
@@ -30,7 +30,7 @@
           
           
           <a href="../../../../../index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
@@ -54,7 +54,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../../../index.html">Robustness Platform</a>
+          <a href="../../../../../index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -120,13 +120,12 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Clipping perturbations</span>
     <span class="k">if</span> <span class="n">eps</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;eps must be greater than or equal to 0, got </span><span class="si">{}</span><span class="s2"> instead&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span>
-        <span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;eps must be greater than or equal to 0, got </span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2"> instead&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">eps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span>
     <span class="k">if</span> <span class="n">clip_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">clip_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">clip_min</span> <span class="o">&gt;</span> <span class="n">clip_max</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;clip_min must be less than or equal to clip_max, got clip_min=</span><span class="si">{</span><span class="n">clip_min</span><span class="si">}</span><span class="s2">, clip_max=</span><span class="si">{</span><span class="n">clip_max</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;clip_min must be less than or equal to clip_max,got clip_min=</span><span class="si">{</span><span class="n">clip_min</span><span class="si">}</span><span class="s2">,clip_max=</span><span class="si">{</span><span class="n">clip_max</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
     <span class="n">asserts</span> <span class="o">=</span> <span class="p">[]</span>
 

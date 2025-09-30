@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>advertrain.dependencies package &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>advertrain.dependencies package &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
@@ -33,7 +33,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -73,7 +73,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Robustness Platform</a>
+          <a href="index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -417,8 +417,8 @@ the accuracy tensor, the loss tensor, and the best adversarial examples found.</
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A tuple containing the final perturbed inputs,
-the accuracy tensor, the loss tensor, and the best adversarial examples found.</p>
+<dd class="field-even"><p>A tuple containing the final perturbed
+inputs, the accuracy tensor, the loss tensor, and the best adversarial examples found.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]</p>
@@ -700,18 +700,21 @@ the total loss, natural loss, robust loss, and entropy loss for unlabeled data.<
 <dt class="sig sig-object py" id="advertrain.dependencies.fire.noise_loss">
 <span class="sig-prename descclassname"><span class="pre">advertrain.dependencies.fire.</span></span><span class="sig-name descname"><span class="pre">noise_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_natural</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clamp_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="reference internal" href="_modules/advertrain/dependencies/fire.html#noise_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#advertrain.dependencies.fire.noise_loss" title="Link to this definition"></a></dt>
 <dd><p>This function augments the input data with random noise and computes the loss
-based on the model’s predictions for the noisy data.</p>
+based on the model’s predictions for the noisy data.
+:param model: The neural network model.
+:type model: torch.nn.Module
+:param x_natural: The original (clean) input data.
+:type x_natural: torch.Tensor
+:param y: The labels corresponding to the input data.
+:type y: torch.Tensor
+:param epsilon: The magnitude of the noise to be added to the input data.</p>
+<blockquote>
+<div><p>Defaults to 0.25.</p>
+</div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The neural network model.</p></li>
-<li><p><strong>x_natural</strong> (<em>torch.Tensor</em>) – The original (clean) input data.</p></li>
-<li><p><strong>y</strong> (<em>torch.Tensor</em>) – The labels corresponding to the input data.</p></li>
-<li><p><strong>epsilon</strong> (<em>float</em><em>, </em><em>optional</em>) – The magnitude of the noise to be added to the input data.
-Defaults to 0.25.</p></li>
-<li><p><strong>clamp_x</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the noisy data is clamped to the range [0.0, 1.0].
-Defaults to True.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>clamp_x</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the noisy data is clamped to the range [0.0, 1.0].
+Defaults to True.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The computed loss based on the model’s predictions for the noisy data.</p>

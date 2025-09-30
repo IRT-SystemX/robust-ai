@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>advertrain.training.autoattack_training &mdash; Robustness Platform 0.1.1 documentation</title>
+  <title>advertrain.training.autoattack_training &mdash; robust-ai 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
 
@@ -30,7 +30,7 @@
           
           
           <a href="../../../index.html" class="icon icon-home">
-            Robustness Platform
+            robust-ai
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -54,7 +54,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Robustness Platform</a>
+          <a href="../../../index.html">robust-ai</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -73,7 +73,10 @@
            <div itemprop="articleBody">
              
   <h1>Source code for advertrain.training.autoattack_training</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains the class for ClassicalTraining including aversarial training using AutoGPD attack</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">robustAI.advertrain.dependencies.autoattack</span><span class="w"> </span><span class="kn">import</span> <span class="n">APGDAttack</span>
@@ -134,7 +137,8 @@
 <span class="sd">            epoch (int): The current epoch number.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the adversarial examples and their corresponding labels.</span>
+<span class="sd">            Tuple[torch.Tensor, torch.Tensor]: A tuple containing the adversarial examples and their corresponding</span>
+<span class="sd">            labels.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">adv_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apgd</span><span class="o">.</span><span class="n">perturb</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">adv_x</span><span class="p">,</span> <span class="n">y</span></div>
