@@ -3,7 +3,7 @@ cd ..
 cp -R _static docs/source/
 cp -R examples docs/source/
 
-# Delete old robustML modules
+# Delete old robustAI modules
 
 rm -f docs/source/robustAI*.rst
 
