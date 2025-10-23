@@ -1,0 +1,3 @@
+# Exclude docs HTML from language stats
+_static/*.html linguist-vendored
+
